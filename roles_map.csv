@@ -1,0 +1,7 @@
+role,voice_id,engine,gender,age_tone,description
+Narrator,dmitri,openai,male,45-55,"теплый, ироничный, уставший, но мудрый"
+Zhanna,alina,google,female,25-35,"мягкая, красивая, спокойная"
+Dasha,svetlana,azure,female,45-55,"материнская, заботливая"
+John,onyx,openai,male,60-70,"глубокий бас, властный"
+MasterOfWorld,nova,openai,male,30-40,"холодный, надменный, чистый тон"
+Ted,youngboy,google,male,20-30,"энергичный, благодарный"

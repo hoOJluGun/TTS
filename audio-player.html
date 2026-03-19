@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎬 M9 Audio Player</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { text-align: center; margin-bottom: 30px; font-size: 2em; }
+        .player {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+        .scene {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .scene:hover { background: rgba(255,255,255,0.15); transform: scale(1.02); }
+        .scene.active { border: 2px solid #e94560; }
+        .scene-title { color: #e94560; font-weight: bold; margin-bottom: 5px; }
+        .scene-text { font-size: 14px; opacity: 0.8; line-height: 1.5; }
+        
+        .controls {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.9);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            backdrop-filter: blur(10px);
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        .btn-play { background: #e94560; color: white; }
+        .btn-play:hover { background: #ff6b6b; transform: scale(1.05); }
+        .btn-stop { background: #333; color: white; }
+        .btn-pause { background: #ffd93d; color: black; }
+        
+        .progress { text-align: center; margin-bottom: 20px; font-size: 1.2em; }
+        
+        .info {
+            background: rgba(233, 69, 96, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 Книга Президента США</h1>
+        
+        <div class="info">
+            👆 Нажми на любую сцену чтобы услышать её<br>
+            ▶ Нажми "ВЕСЬ ФИЛЬМ" для непрерывного воспроизведения
+        </div>
+        
+        <div class="player">
+            <div class="progress">
+                <span id="current">0</span> / <span id="total">0</span>
+            </div>
+            <div id="scenes"></div>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <button class="btn-stop" onclick="stop()">⏹ Стоп</button>
+        <button class="btn-play" onclick="playAll()">▶ ВЕСЬ ФИЛЬМ</button>
+    </div>
+
+    <script>
+        const scenes = [
+            { title: "Глава 1: Начало", text: "Дорогой мой зритель, наконец-то меня выписали из больницы, где меня лечили от инфаркта и сделали операцию на сердце. Я пишу эту книгу в две тысячи двадцать четвёртом году, в сентябре месяце, в основном сидя в своей уютной комнате, залитой солнцем, на восьмом этаже в городе Запорожье." },
+            { title: "Глава 1: Квартира", text: "На полу лежит толстый ковёр, на нём стоит удобное кресло. Я смотрю в окно, вижу верхушки деревьев и реку Днепр." },
+            { title: "Глава 1: Детство", text: "Родился я в городе Запорожье, в Украине. Пошёл в детский сад. Воспоминания о детском саде — это то, что я влюбился в девочку из нашей группы, и когда приходил домой из сада, представлял, как женюсь на ней." },
+            { title: "Глава 2: Школа", text: "После сада я пошёл в школу, в первый класс. Первого сентября мама привела меня в школу, у нас началась школьная линейка. На линейке я подрался со своим новым одноклассником Сергеем." },
+            { title: "Глава 2: Первый класс", text: "Мы с мамой были сильно расстроены, что я подрался, придя в школу в первый раз. Все дети нарядные, дарят учителям цветы, фотографируются, а я стою весь грязный, побитый, в крови." },
+            { title: "Глава 5: Карты", text: "Как-то я стоял один перед центральным входом в училище. Ко мне подошёл парень с нашего училища и спросил: Ты в карты играешь? Я ответил: Да, играю." },
+            { title: "Глава 5: Кеша", text: "Придя во двор училища, я увидел двух парней намного старше меня. Мы подошли к ним, и один спросил: Ты играешь? Незнакомец достал колоду карт, раздал их, и мы начали играть. Я начал его обыгрывать. В начале игры я выиграл шестьдесят рублей." },
+            { title: "Глава 5: Долг", text: "Через несколько минут появился Гера и говорит: Привет, Кеша! Я понял, что играю с Кешей. Минут через десять Кеша спросил: Будем играть дальше или закончим? В итоге Кеша сказал, что я проиграл ему сто двадцать рублей." },
+            { title: "Глава 6: Америка", text: "Прилетели в Нью-Йорк. Я был потрясён — другая планета. Переехали в Вашингтон. Забрали Стива из садика. Я получил гражданство, устроился разнорабочим в школу." },
+            { title: "Глава 7: Тэд", text: "В лесу спас велосипедиста Тэда, попавшего в аварию. Он оказался сыном влиятельного человека Джона. Джон оплатил мне школу политологии." },
+            { title: "Глава 7: Сделка", text: "Жанна забеременела. Джон предложил мне идти в Сенат. Но условие: бросить Жанну, сделать пластику, жениться на американке и сменить биографию." },
+            { title: "Глава 7: Президент", text: "Я стал Дэни Дэниэлсом. Сделал операцию. Женился на Патриции. Стал сенатором Массачусетса. На тайном собрании братства меня выбрали кандидатом в президенты. Я выиграл выборы. Стал президентом США. Переехал в Белый дом." },
+            { title: "Глава 8: Властелин", text: "Летал в Лондон к Властелину мира. Видел его замок с музеями золота, библиотекой Ивана Грозного и даже живым снежным человеком." },
+            { title: "Глава 8: Предложение", text: "Властелин рассказал, что братство планирует утилизировать большую часть населения, чтобы спасти планету. Он спросил: Вы с нами? Я отказался участвовать." },
+            { title: "Глава 9: Возвращение", text: "Вернулся в Вашингтон. Написал сыну Диме письмо, потом выкинул ноутбук в озеро Мичиган. Мне сделали вторую пластику, нашли двойника-президента." },
+            { title: "Глава 9: Дом", text: "Прилетел в Запорожье. Купил квартиру в доме бабушки. Встретил Жанну. Мы начали жить вместе." },
+            { title: "Финал", text: "Однажды ночью позвонил Тэд. Он спросил: Почему ты мне не сказал, что... На этом всё. Читайте книги, берегите близких. Всем мира и добра. Спасибо." }
+        ];
+
+        let utterance = null;
+        let currentIndex = 0;
+        let isPlaying = false;
+
+        const synth = window.speechSynthesis;
+        
+        function speak(text) {
+            stop();
+            utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'ru-RU';
+            utterance.rate = 0.9;
+            utterance.pitch = 1;
+            
+            // Выбрать русский голос
+            const voices = synth.getVoices();
+            const russianVoice = voices.find(v => v.lang.includes('ru'));
+            if (russianVoice) utterance.voice = russianVoice;
+            
+            synth.speak(utterance);
+        }
+
+        function playAll() {
+            currentIndex = 0;
+            isPlaying = true;
+            playNext();
+        }
+
+        function playNext() {
+            if (!isPlaying || currentIndex >= scenes.length) {
+                isPlaying = false;
+                return;
+            }
+            
+            const scene = scenes[currentIndex];
+            document.getElementById('current').textContent = currentIndex + 1;
+            
+            speak(scene.text);
+            
+            utterance.onend = () => {
+                currentIndex++;
+                setTimeout(playNext, 1000);
+            };
+        }
+
+        function stop() {
+            isPlaying = false;
+            synth.cancel();
+        }
+
+        // Рендер списка
+        const container = document.getElementById('scenes');
+        document.getElementById('total').textContent = scenes.length;
+        
+        scenes.forEach((scene, i) => {
+            const div = document.createElement('div');
+            div.className = 'scene';
+            div.innerHTML = `
+                <div class="scene-title">${scene.title}</div>
+                <div class="scene-text">${scene.text}</div>
+            `;
+            div.onclick = () => {
+                currentIndex = i;
+                document.getElementById('current').textContent = i + 1;
+                speak(scene.text);
+            };
+            container.appendChild(div);
+        });
+
+        // Загрузить голоса
+        speechSynthesis.onvoiceschanged = () => {};
+    </script>
+</body>
+</html>

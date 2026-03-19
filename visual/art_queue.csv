@@ -1,0 +1,21 @@
+scene_id,prompt,negative,aspect_ratio
+ch01_zaporozhye_1,"Vintage 1980s Soviet apartment, Zaporizhzhia, 8th floor, sunlit room, thick carpet, comfortable armchair, view from window of Dnipro river tops, warm afternoon light, nostalgic atmosphere, 35mm film grain, cinematic","modern, smartphone, neon, low quality, deformed, ugly",16:9
+ch01_zaporozhye_2,"Close-up elderly hands typing on old keyboard, warm evening light, intimate moment, vintage Soviet room, nostalgic mood, film grain, documentary style","modern, bright, digital, low quality",16:9
+ch02_school_1,"Soviet schoolyard, 1 September, first grade, boy with bruised face standing alone, other children in neat clothes holding flowers, back to school, cinematic golden hour, 1980s","smartphones, modern clothes, color, low quality",16:9
+ch02_school_2,"Soviet classroom interior, 1980s, wooden desks, red pioneer tie on desk, chalkboard with Cyrillic text, afternoon light through windows, nostalgic educational atmosphere","modern, neon, computers, low quality",16:9
+ch03_teacher,"Soviet school teacher, middle-aged woman with glasses, pointing at map of Bangladesh, classroom, serious expression, 1980s interior, warm lighting","modern, casual, digital, low quality",16:9
+ch04_teacher_bad,"Soviet school principal office, stern man behind desk, filing cabinet, window with curtains, 1980s, authoritarian atmosphere, documents on desk","modern, bright, casual, low quality",16:9
+ch05_tech_school,"Soviet vocational school, construction trade, young men in work clothes, tile laying practice, workshop interior, 1980s, industrial lighting","modern, digital, bright, low quality",16:9
+ch05_cards,"Underground parking or back alley, three men playing cards, tense atmosphere, cigarette smoke, 1980s Soviet informal style, dramatic lighting","bright, modern, clean, low quality",16:9
+ch06_usa_1,"New York City 1990s, Manhattan skyline, aeroplane window view, wide eyes of immigrant, awe and shock, golden hour","old, black and white, low quality, deformed",16:9
+ch06_usa_2,"Washington DC residential street, autumn leaves, American suburbia, 1990s, family walking, American dream atmosphere","modern, 2020s, futuristic, low quality",16:9
+ch07_forest_accident,"Forest road, autumn, injured cyclist on ground, middle-aged man kneeling beside him, concern on face, fallen bicycle, dramatic moment","bright, summer, modern, low quality",16:9
+ch07_meeting,"Elegant American office, mature businessman in suit, younger man sitting across, serious conversation, mahogany desk, American flag in window, power dynamic","casual, informal, modern, low quality",16:9
+ch08_white_house,"White House exterior, Oval Office, American president at desk, flags, serious expression,权力, cinematic dramatic lighting","modern casual, informal, low quality",16:9
+ch08_london_castle,"Gothic castle exterior, London, dark stormy sky, mysterious atmosphere, ancient stone walls, dramatic lighting, moody, cinematic","bright, modern, cheerful, low quality",16:9
+ch08_castle_interior,"Grand castle interior, gold museum display cases, ancient books, library with vaulted ceiling, priceless artifacts, dramatic chandelier lighting, mysterious atmosphere","modern, casual, bright, low quality",16:9
+ch08_snowman,"Cryptic laboratory, glass container with mysterious creature inside, snowman-like being, scientific equipment, eerie green glow, suspenseful atmosphere","bright, cheerful, modern, low quality",16:9
+ch08_master,"Wealthy businessman office, dark suit, clean cut appearance, cold expression, expensive watch, power and control, cinematic portrait","casual, warm, informal, low quality",16:9
+ch09_return,"Zaporizhzhia street, autumn, middle-aged man walking toward camera, familiar buildings, nostalgic mood, golden hour, emotional homecoming","modern, futuristic, bright, low quality"
+ch09_reunion,"Zaporizhzhia street, autumn, man and blonde woman running toward each other, arms open, emotional reunion, cinematic romantic moment, golden hour","sad, dark, modern, low quality",16:9
+ch09_phone,"Late night, dimly lit room, phone ringing on table, mysterious caller, suspenseful atmosphere, dramatic shadow","bright, cheerful, modern, low quality",16:9
